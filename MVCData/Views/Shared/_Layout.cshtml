@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    @{
+        if (ViewBag.Title != null)
+        {
+            <title>@ViewBag.Title</title>
+        }
+    }
+</head>
+<body>
+    <header>
+        <h1 id="TopLeftHeaderCell">ASP.NET</h1>
+        <nav class="headerNav">
+            <ul class="headerUl">
+                @{
+                    // Build the links menu:
+                    Dictionary<string, string> links = new Dictionary<string, string>();
+
+
+                    foreach (var item in links)
+                    {
+                        <li class="headerLi"><a href="@item.Value">@item.Key</a></li>
+                    }
+                }
+            </ul>
+        </nav>
+        @Html.ActionLink("Home", "Index", "Home", null, new { id = "TopRightHeaderCell" })
+    </header>
+
+    <main class="main">
+        @{
+            if (ViewBag.Title != null)
+            {
+                <h2 class="Title">@ViewBag.Title</h2>
+            }
+            @RenderBody();
+        }
+    </main>
+    <footer>
+        <p>&copy; @DateTime.Now.Year Mahnoush Aminshahidi</p>
+    </footer>
+    <script src="~/site.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
+
+

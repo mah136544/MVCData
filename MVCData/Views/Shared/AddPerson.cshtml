@@ -1,0 +1,13 @@
+﻿@using MVCData.Models;
+@model CreatePersonViewModel
+
+    <form class="form" id="AddPersonForm" asp-controller="Home" asp-action="AddPerson" method="post">
+        <label>Add Person:</label>
+        <label asp-for="Name"></label>
+        <input class="formInputField" asp-for="Name" required />
+        <label asp-for="PhoneNumber"></label>
+        <input class="formInputField" asp-for="PhoneNumber" />
+        <label asp-for="City"></label>
+        <input class="formInputField" asp-for="City" />
+        <input class="formButton" type="submit" value="Add" />
+    </form>

@@ -1,0 +1,57 @@
+﻿@using MVCData.Models
+@model PeopleViewModel
+
+@{
+
+    ViewData["Title"] = "People ";
+
+    var createPersonViewModel = new CreatePersonViewModel();    // Create an emtpy view-model for use in the partial view AddPerson
+}
+<form class="form" id="SearchForm" asp-action="Index" asp-controller="Home" method="get">
+    <label for="searchFor">Search for :</label>
+    <input class="formInputField" type="text" id="searchFor" name="searchFor" />
+    <input class="formButton" type="submit" value="Search" />
+
+</form>
+<p></p>
+<partial name="AddPerson" model="createPersonViewModel" />
+<p></p>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            @if (Model.SearchFor != null)
+            {
+                string str = $"Filter: '{Model.SearchFor}'";
+
+            }
+
+
+        </div>
+        
+
+        
+    </div>
+        <div class="tableHeader row">
+        <div class="col-lg-1">Nr.</div>
+        <div class="col-lg-4">Name:</div>
+        <div class="col-lg-3">City:</div>
+        <div class="col-lg-3">PhoneNumber:</div>
+        <div class="col-lg-1">&nbsp;</div>
+    </div>
+    @{
+        int count = Model.PeopleToDisplay.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var item = Model.PeopleToDisplay[i];
+
+            int rowClassIndex = (i % 2);
+            item.RowClass = Model.TableRowClasses[rowClassIndex];
+            <partial name="_PersonView" model="item" />
+        }
+    }
+    <div class="tableFooter row">
+        <div class="col-lg-10">&nbsp;</div>
+        <div class="col-lg-2">@count item(s)</div>
+    </div>
+</div>
+
