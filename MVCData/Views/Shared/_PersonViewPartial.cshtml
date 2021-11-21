@@ -1,10 +1,29 @@
-@using MVCData.Models
+﻿@using MVCData.Models;
 @model Person
-
 <div class="@Model.RowClass row">
     <div class="col-lg-1">@(Model.ItemIndex + 1)</div>
     <div class="col-lg-4">@Model.Name</div>
     <div class="col-lg-3">@Model.City</div>
     <div class="col-lg-3">@Model.PhoneNumber</div>
-    <div class="col-lg-1"><a href="/Home/DeletePerson?id=@Model.ID">Remove</a></div>
+    <div class="col-lg-1">
+        @
+        {
+            
+           
+                <a href="/Home/DeletePerson?id=@Model.ID">Remove</a>
+              
+            
+
+        }
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
+
