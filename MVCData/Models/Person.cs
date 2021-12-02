@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace MVCData.Models
 {
+    public enum Column5Modes { RemoveLink, DisplayID }
+
     public class Person
     {
         private int itemIndex;
+        private Column5Modes column5Mode;
 
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
@@ -17,6 +20,8 @@ namespace MVCData.Models
         public int ItemIndex { get => itemIndex; set { itemIndex = value; } }
 
         public string RowClass { get; set; }
+
+        public Column5Modes Column5Mode { get => column5Mode; set { column5Mode = value; } }
 
         public string CookieString
         {
@@ -53,6 +58,7 @@ namespace MVCData.Models
             City = source.City;
             ID = source.ID;
             itemIndex = source.itemIndex;
+            column5Mode = source.column5Mode;
         }
 
         public Person(CreatePersonViewModel personData)
@@ -72,6 +78,6 @@ namespace MVCData.Models
 }
 
 
-    
-    
-  
+
+
+

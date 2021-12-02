@@ -83,11 +83,11 @@ footer {
     display: flex;
     border: 1px solid black;
     border-radius: 8px;
-    background-color: dodgerblue;
+    background-color:lightgray;
     height: 50px;
     align-items: center;
     padding-left: 20px;
-    color: #FFFFFF;
+    color:lightgray;
 }
 
 /*
@@ -99,7 +99,7 @@ footer {
     flex-direction: column;
     border: 1px solid black;
     /*    background-color: #0066CC; */
-    background-color: #0C1D40;
+    background-color: lightgray;
     border-radius: 8px;
     padding: 5px 8px;
     min-height: 500px;
@@ -110,7 +110,7 @@ footer {
     font-weight: bolder;
     border: 1px solid black;
     border-radius: 8px;
-    background-color: dodgerblue;
+    background-color:gray;
 }
 
 /*
@@ -124,7 +124,7 @@ footer {
     padding: 5px 8px;
 }
 
-.formButton {
+formButton {
     background-color: #4CAF50;
     border: 1px solid black;
     border-radius: 4px;
@@ -133,6 +133,7 @@ footer {
     text-decoration: none;
     cursor: pointer;
 }
+
 
 .formInputField {
     padding: 6px 10px;
@@ -170,20 +171,20 @@ td, th {
 }
 
 .tableHeader {
-    background-color: #0066CC;
+    background-color:gray;
     font-weight: bold;
 }
 
 .tableFooter {
-    background-color: #0066CC;
+    background-color:gray ;
 }
 
 .tableRowEven {
-    background-color: #004080;
+    background-color: gray;
 }
 
 .tableRowOdd {
-    background-color: #003366;
+    background-color: gray;
 }
 
 .my-container {
@@ -214,7 +215,7 @@ body {
 header {
     display: flex;
     border: 1px solid black;
-    background-color: dodgerblue;
+    background-color: gray;
     align-items: center;
     height: 70px;
     border-radius: 8px;
@@ -223,12 +224,12 @@ header {
 a:link {
     color: #FFFFFF;
     text-decoration: none;
-    font-weight: bold;
+    font-weight:normal;
 }
 
 a:hover {
     text-decoration: underline;
-    color: #FF9900;
+    color:lightpink;
 }
 
 #TopLeftHeaderCell {
@@ -275,7 +276,7 @@ footer {
     display: flex;
     border: 1px solid black;
     border-radius: 8px;
-    background-color: dodgerblue;
+    background-color:gray;
     height: 50px;
     align-items: center;
     padding-left: 20px;
@@ -291,7 +292,7 @@ footer {
     flex-direction: column;
     border: 1px solid black;
     /*    background-color: #0066CC; */
-    background-color: #0C1D40;
+    background-color:lightgray;
     border-radius: 8px;
     padding: 5px 8px;
     min-height: 500px;
@@ -302,7 +303,7 @@ footer {
     font-weight: bolder;
     border: 1px solid black;
     border-radius: 8px;
-    background-color: dodgerblue;
+    background-color: lightblue;
 }
 
 /*
@@ -317,10 +318,10 @@ footer {
 }
 
 .formButton {
-    background-color: #4CAF50;
+    background-color:white;
     border: 1px solid black;
     border-radius: 4px;
-    color: white;
+    color: black;
     padding: 5px 25px;
     text-decoration: none;
     cursor: pointer;
@@ -362,20 +363,20 @@ td, th {
 }
 
 .tableHeader {
-    background-color: #0066CC;
+    background-color: aqua;
     font-weight: bold;
 }
 
 .tableFooter {
-    background-color: #0066CC;
+    background-color:aqua;
 }
 
 .tableRowEven {
-    background-color: #004080;
+    background-color:aqua;
 }
 
 .tableRowOdd {
-    background-color: #003366;
+    background-color:lightblue;
 }
 
 .my-container {

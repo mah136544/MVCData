@@ -113,6 +113,21 @@ namespace MVCData.Models
             }
         }
 
+        public bool DeletePersonByID(int aPersonID)
+        {
+            bool success = false;
+            Person person = FindPersonByID(aPersonID);
+
+            if (person != null)
+            {
+                success = People.Remove(person);
+                WritePeopleCookie(CookieString);
+            }
+
+            return success;
+        }
+
+
         public void WritePeopleCookie(string cookieString)
         {
             CookieOptions option = new CookieOptions();
@@ -147,11 +162,24 @@ namespace MVCData.Models
             {
                 WritePeopleCookie(CookieString);
             }
-            return itemIndex;
+            return itemIndex; 
+        }
+       
+        public Person FindPersonByID(int aPersonID)
+        {
+            Person person = null;
+
+            foreach (var item in People)
+            {
+                if (item.ID == aPersonID)
+                {
+                    person = item;
+                    break;
+                }
+            }
+            return person;
         }
     }
 }
 
 
-    
-  

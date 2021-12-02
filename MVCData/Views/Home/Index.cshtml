@@ -14,7 +14,7 @@
 
 </form>
 <p></p>
-<partial name="AddPerson" model="createPersonViewModel" />
+<partial name="AddPerson" model="createPersonViewModel"/>
 <p></p>
 <div class="container">
     <div class="row">
@@ -24,12 +24,14 @@
                 string str = $"Filter: '{Model.SearchFor}'";
 
             }
-
-
+            else
+            {
+        <div>@Html.Raw("&nbsp;")</div>
+            }
         </div>
-        
 
-        
+
+
     </div>
         <div class="tableHeader row">
         <div class="col-lg-1">Nr.</div>
@@ -46,7 +48,8 @@
 
             int rowClassIndex = (i % 2);
             item.RowClass = Model.TableRowClasses[rowClassIndex];
-            <partial name="_PersonView" model="item" />
+            item.Column5Mode = Column5Modes.RemoveLink;
+            <partial name="_PersonViewPartial" model="item" />
         }
     }
     <div class="tableFooter row">

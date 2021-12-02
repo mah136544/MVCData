@@ -23,6 +23,7 @@
 
             int rowClassIndex = (i % 2);
             item.RowClass = Model.TableRowClasses[rowClassIndex];
+            item.Column5Mode = Column5Modes.DisplayID;
             <partial name="_PersonViewPartial" model="item" />
         }
     }

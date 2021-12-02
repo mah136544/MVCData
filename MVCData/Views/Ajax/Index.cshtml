@@ -1,0 +1,30 @@
+﻿@using MVCData.Models;
+@model PeopleViewModel
+
+@{
+    ViewData["Title"] = "AJAX";
+
+    int maxID;
+    maxID = Model.People.Count > 0 ? Model.People[Model.People.Count - 1].ID : 0;
+}
+<div>
+    <div id="ActionButtons" class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <input type="button" class="formButton" onclick="GetPeopleList()" value="List of People" />
+            </div>
+            <div class="col-lg-10">
+                <label for="PersonIDInput">Person ID:</label>
+                <input id="PersonIDInput" class="formInputField" type="number" value="0" min="0" max="@maxID" />
+                <input type="button" class="formButton" onclick="GetPersonByID()" value="Person " />
+                <input type="button" class="formButton" onclick="DeletePersonByID()" value="Remove Person" />
+            </div>
+        </div>
+    </div>
+
+    <div id="OutputElement"></div>
+
+    <div class="container">
+        <h3 id="Message">&nbsp;</h3>
+    </div>
+</div>
