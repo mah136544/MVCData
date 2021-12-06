@@ -4,8 +4,7 @@
 @{
     ViewData["Title"] = "AJAX";
 
-    int maxID;
-    maxID = Model.People.Count > 0 ? Model.People[Model.People.Count - 1].ID : 0;
+   
 }
 <div>
     <div id="ActionButtons" class="container">
@@ -14,10 +13,10 @@
                 <input type="button" class="formButton" onclick="GetPeopleList()" value="List of People" />
             </div>
             <div class="col-lg-10">
-                <label for="PersonIDInput">Person ID:</label>
-                <input id="PersonIDInput" class="formInputField" type="number" value="0" min="0" max="@maxID" />
-                <input type="button" class="formButton" onclick="GetPersonByID()" value="Person " />
-                <input type="button" class="formButton" onclick="DeletePersonByID()" value="Remove Person" />
+                <label for="PersonIndexInput">Person #:</label>
+                <input id="PersonIndexInput" class="formInputField" type="number" value="1" min="1" max="@Model.People.Count" />
+                <input type="button" class="formButton" onclick="GetPerson()" value="Person " />
+                <input type="button" class="formButton" onclick="DeletePerson()" value="Remove Person" />
             </div>
         </div>
     </div>

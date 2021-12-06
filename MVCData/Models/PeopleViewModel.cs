@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MVCData.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,58 +11,43 @@ namespace MVCData.Models
     public class PeopleViewModel
     {
         private Controller aController;
+        private readonly MVCEFDbContext EFDBContext;
         private string searchFor;
 
-        public readonly List<Person> People;
+        public  List<PersonDB> People;
+        public List<MLink> MLinks;
+        
         public readonly List<Person> PeopleToDisplay;
         public readonly List<string> TableRowClasses;
 
-        public string CookieString
-        {
-            get
-            {
-                string cookieString = string.Empty;
-
-                foreach (var person in People)
-                {
-                    cookieString += person.CookieString;
-                }
-                return cookieString;
-            }
-
-            set
-            {
-                if (value != null)
-                {
-                    string[] cookieLines = value.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach (var line in cookieLines)
-                    {
-                        Person person = new Person();
-                        person.CookieString = line;
-                        AddPerson(person, false);
-                    }
-                }
-            }
-        }
+        
+            
+        
 
         public string SearchFor { get => searchFor; set { searchFor = value; } }
 
         
 
-        public PeopleViewModel(Controller aController)
+        public PeopleViewModel(Controller aController, MVCEFDbContext efdbContext)
         {
             this.aController = aController;
-            People = new List<Person>();
+            EFDBContext = efdbContext;
             PeopleToDisplay = new List<Person>();
 
             TableRowClasses = new List<string>();
             TableRowClasses.Add("tableRowOdd");
             TableRowClasses.Add("tableRowEven");
-
-            CookieString = aController.Request.Cookies["people"]; // Add people from cookie
+            ReadDB();
+            
         }
-
+        public void ReadDB()
+        {
+            People = EFDBContext.People.ToList();
+            MLinks = EFDBContext.MLinks.ToList();
+        }
+        
+        
+        
         public void PrepareView()
         {
             int peopleToDisplayIndex = 0;
@@ -96,78 +82,66 @@ namespace MVCData.Models
             }
         }
 
-        public Person AddPerson(string aName, string aCity, string aPhoneNumber)
+        public bool DeletePerson(int itemIndex)
         {
-            Person person = new Person(aName, aCity, aPhoneNumber);
-            AddPerson(person, true);
+            bool success = false;
+            if (itemIndex >= 0 && itemIndex < People.Count)
+            {
+                success = RemovePersonFromDB(People[itemIndex].ID);
+            }
+            return success;
+        }
+
+       public bool DeletPersonByID(int aPersonID)
+        {
+
+            return RemovePersonFromDB(aPersonID);
+        }
+
+         
+        public PersonDB AddPerson(CreatePersonViewModel personData)
+        {
+            PersonDB  person = null;
+
+            if (aController.ModelState.IsValid)
+            {
+                person = new PersonDB(personData);
+
+                AddPersonToDB(person);
+            }
 
             return person;
         }
 
-        public void DeletePerson(int itemIndex)
-        {
-            if (itemIndex >= 0 && itemIndex < People.Count)
-            {
-                People.RemoveAt(itemIndex);
-                WritePeopleCookie(CookieString);
-            }
-        }
 
-        public bool DeletePersonByID(int aPersonID)
+        public bool RemovePersonFromDB(int ID)
         {
             bool success = false;
-            Person person = FindPersonByID(aPersonID);
 
-            if (person != null)
+            PersonDB PersondB = EFDBContext.People.Find(ID);
+            if (PersondB != null)
             {
-                success = People.Remove(person);
-                WritePeopleCookie(CookieString);
+                People.Remove(PersondB);
+                EFDBContext.People.Remove(PersondB);
+                EFDBContext.SaveChanges();
+                success = true;
             }
-
             return success;
         }
 
 
-        public void WritePeopleCookie(string cookieString)
+        public int AddPersonToDB(PersonDB aPerson)
         {
-            CookieOptions option = new CookieOptions();
-            option.Expires = DateTime.Now.AddDays(10);
-            aController.Response.Cookies.Append("people", cookieString, option);
+            aPerson.ID = 0;                 // Set ID to 0 to allow addition to database
+
+            EFDBContext.People.Add(aPerson);
+            EFDBContext.SaveChanges();
+            return EFDBContext.People.Count();
         }
 
-        public Person AddPerson(CreatePersonViewModel personData)
+        public PersonDB FindPersonByID(int aPersonID)
         {
-            Person person = null;
-
-            if (aController.ModelState.IsValid)
-            {
-                person = new Person(personData);
-
-                AddPerson(person, true);
-            }
-
-            return person;
-        }
-
-        public int AddPerson(Person aPerson, bool UpdateDB)
-        {
-            int itemIndex = People.Count;
-
-            aPerson.ID = itemIndex;
-            aPerson.ItemIndex = itemIndex;
-
-            People.Add(aPerson);
-
-            if (UpdateDB)
-            {
-                WritePeopleCookie(CookieString);
-            }
-            return itemIndex; 
-        }
-       
-        public Person FindPersonByID(int aPersonID)
-        {
-            Person person = null;
+            PersonDB person = null;
 
             foreach (var item in People)
             {
@@ -179,7 +153,19 @@ namespace MVCData.Models
             }
             return person;
         }
+
     }
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
