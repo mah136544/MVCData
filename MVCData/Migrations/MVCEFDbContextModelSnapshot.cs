@@ -112,7 +112,7 @@ namespace MVCData.Migrations
                         new
                         {
                             Name = "AJAX",
-                            LinkURL = "/AJAX/",
+                            LinkURL = "/Ajax/Index",
                             Title = "AJAX"
                         },
                         new

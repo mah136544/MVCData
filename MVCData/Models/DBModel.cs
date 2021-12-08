@@ -35,7 +35,7 @@ namespace MVCData.Models
         {
         People= EFDBContext.People.ToList();
         MLinks = EFDBContext.MLinks.ToList();
-            //dynamic MLinks = null;
+           
         Cities = EFDBContext.Cities.ToList();
         Countries = EFDBContext.Countries.ToList();
        

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCData.Migrations
 {
     [DbContext(typeof(MVCEFDbContext))]
-    [Migration("20211208094640_add Table city")]
-    partial class addTablecity
+    [Migration("20211208104324_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,7 +114,7 @@ namespace MVCData.Migrations
                         new
                         {
                             Name = "AJAX",
-                            LinkURL = "/AJAX/",
+                            LinkURL = "/Ajax/Index",
                             Title = "AJAX"
                         },
                         new
