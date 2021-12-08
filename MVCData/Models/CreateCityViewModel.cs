@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 
 namespace MVCData.Models
 {
-    public class CreatePersonViewModel
+    public class CreateCityViewModel
     {
         [DataType(DataType.Text)]
         [Display(Name = "Name:")]
         [Required(ErrorMessage = "A name is required")]
         public string Name { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Phone Number:")]
-        public string PhoneNumber { get; set; }
+        [Display(Name = "Country:")]
+        public int CountryId { get; set; }
 
-        [Display(Name = "City:")]
-        public int CityId { get; set; }
-
-        public CreatePersonViewModel()
+        public CreateCityViewModel()
         {
             Name = string.Empty;
-            PhoneNumber = string.Empty;
-            CityId = 0;
+            CountryId = 0;
         }
     }
 }
+

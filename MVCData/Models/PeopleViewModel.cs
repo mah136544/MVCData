@@ -8,52 +8,25 @@ using System.Threading.Tasks;
 
 namespace MVCData.Models
 {
-    public class PeopleViewModel
+    public class PeopleViewModel :DBModel 
     {
-        private Controller aController;
-        private readonly MVCEFDbContext EFDBContext;
         private string searchFor;
-
-        public  List<PersonDB> People;
-        public List<MLink> MLinks;
         
         public readonly List<Person> PeopleToDisplay;
-        public readonly List<string> TableRowClasses;
-
-        
-            
-        
 
         public string SearchFor { get => searchFor; set { searchFor = value; } }
 
-        
-
-        public PeopleViewModel(Controller aController, MVCEFDbContext efdbContext)
+        public PeopleViewModel(Controller aController, MVCEFDbContext dbContext): base(aController,dbContext)
         {
-            this.aController = aController;
-            EFDBContext = efdbContext;
-            PeopleToDisplay = new List<Person>();
-
-            TableRowClasses = new List<string>();
-            TableRowClasses.Add("tableRowOdd");
-            TableRowClasses.Add("tableRowEven");
-            ReadDB();
             
+            PeopleToDisplay = new List<Person>();
         }
-        public void ReadDB()
-        {
-            People = EFDBContext.People.ToList();
-            MLinks = EFDBContext.MLinks.ToList();
-        }
-        
-        
-        
-        public void PrepareView()
+        public override void PrepareView()
         {
             int peopleToDisplayIndex = 0;
             bool addPerson = false;
 
-            
+       
 
             PeopleToDisplay.Clear();
 
@@ -61,7 +34,7 @@ namespace MVCData.Models
             {
                 if (searchFor != null && searchFor.Length > 0)
                 {
-                    if (person.Name.Contains(searchFor) || person.City.Contains(searchFor))
+                    if (person.Name.Contains(searchFor) || person.City.Name.Contains(searchFor))
                     {
                         addPerson = true;
                     }
@@ -74,12 +47,25 @@ namespace MVCData.Models
                 if (addPerson)
                 {
                     Person personInPeopleToDisplayList = new Person(person);    // Create a copy of person
-                    personInPeopleToDisplayList.ItemIndex = peopleToDisplayIndex;   // Assign a new ItemIndex (which is its index in the PeopleToDisplay list)
+                    personInPeopleToDisplayList.ItemIndex = peopleToDisplayIndex;   // Assign an ItemIndex (which is its index in the PeopleToDisplay list)
 
                     PeopleToDisplay.Add(personInPeopleToDisplayList);
                     peopleToDisplayIndex++;
                 }
             }
+        }
+        public PersonDB AddPerson(CreatePersonViewModel personData)
+        {
+            PersonDB person = null;
+
+            if (aController.ModelState.IsValid)
+            {
+                person = new PersonDB(personData);
+
+                AddPersonToDB(person);
+            }
+
+            return person;
         }
 
         public bool DeletePerson(int itemIndex)
@@ -92,51 +78,9 @@ namespace MVCData.Models
             return success;
         }
 
-       public bool DeletPersonByID(int aPersonID)
+        public bool DeletePersonByID(int aPersonID)
         {
-
             return RemovePersonFromDB(aPersonID);
-        }
-
-         
-        public PersonDB AddPerson(CreatePersonViewModel personData)
-        {
-            PersonDB  person = null;
-
-            if (aController.ModelState.IsValid)
-            {
-                person = new PersonDB(personData);
-
-                AddPersonToDB(person);
-            }
-
-            return person;
-        }
-
-
-        public bool RemovePersonFromDB(int ID)
-        {
-            bool success = false;
-
-            PersonDB PersondB = EFDBContext.People.Find(ID);
-            if (PersondB != null)
-            {
-                People.Remove(PersondB);
-                EFDBContext.People.Remove(PersondB);
-                EFDBContext.SaveChanges();
-                success = true;
-            }
-            return success;
-        }
-
-
-        public int AddPersonToDB(PersonDB aPerson)
-        {
-            aPerson.ID = 0;                 // Set ID to 0 to allow addition to database
-
-            EFDBContext.People.Add(aPerson);
-            EFDBContext.SaveChanges();
-            return EFDBContext.People.Count();
         }
 
         public PersonDB FindPersonByID(int aPersonID)
@@ -153,9 +97,7 @@ namespace MVCData.Models
             }
             return person;
         }
-
     }
-
 }
 
 
@@ -165,6 +107,12 @@ namespace MVCData.Models
 
 
 
+
+
+
+
+         
+        
 
 
 

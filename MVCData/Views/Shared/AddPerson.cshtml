@@ -1,4 +1,5 @@
 ﻿@using MVCData.Models;
+@using MVCData.Data;
 @model CreatePersonViewModel
 
 
@@ -8,8 +9,16 @@
     <input class="formInputField" asp-for="Name" required />
     <label asp-for="PhoneNumber"></label>
     <input class="formInputField" asp-for="PhoneNumber" />
-    <label asp-for="City"></label>
-    <input class="formInputField" asp-for="City" />
+    <label asp-for="CityId"></label>
+    <select asp-for="CityId" class="formInputField">
+        @{
+            // Build the city drop-down list from database table 'Cities':
+            foreach (City city in ViewBag.Cities)
+            {
+                <option value="@city.Id">@city.Name</option>
+            }
+        }
+    </select>
     <input class="formButton" type="submit" value="Add" />
 </form>
 

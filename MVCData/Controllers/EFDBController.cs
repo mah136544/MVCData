@@ -14,5 +14,12 @@ namespace MVCData.Controllers
         {
             EFDBContext = context;
         }
-     }
+
+        public EFDBController(DatabaseMVCEFDbContext context)
+        {
+            Context = context;
+        }
+
+        public DatabaseMVCEFDbContext Context { get; }
+    }
 }

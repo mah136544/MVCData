@@ -1,0 +1,55 @@
+﻿@using MVCData.Models;
+@model CountriesViewModel;
+
+@{
+    ViewData["Title"] = "Countries";
+
+    var createCountryViewModel = new CreateCountryViewModel();    // Create an emtpy view-model for use in the partial view AddPerson
+}
+
+<p></p>
+<partial name="AddCountry" model="createCountryViewModel" />
+<p></p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div>&nbsp;</div>
+        </div>
+    </div>
+    <div class="tableHeader row">
+        <div class="col-lg-1">Nr.</div>
+        <div class="col-lg-4">Name:</div>
+        <div class="col-lg-3">Country Code:</div>
+        <div class="col-lg-3">Cities:</div>
+        <div class="col-lg-1">&nbsp;</div>
+    </div>
+    @{
+        string rowclass;
+
+        int count = Model.Countries.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var item = Model.Countries[i];
+
+            int rowClassIndex = (i % 2);
+            rowclass = Model.TableRowClasses[rowClassIndex];
+            <div class="@rowclass row">
+                <div class="col-lg-1">@(i + 1)</div>
+                <div class="col-lg-4">@item.Name</div>
+                <div class="col-lg-3">@item.CountryCode</div>
+                <div class="col-lg-3">@(item.Cities!=null ? item.Cities.Count : 0)</div>
+                <div class="col-lg-1">
+                    <a href="/Countries/DeleteCountry?id=@item.Id">Remove</a>
+                </div>
+            </div>
+        }
+    }
+    <div class="tableFooter row">
+        <div class="col-lg-10">&nbsp;</div>
+        <div class="col-lg-2">@count item(s)</div>
+    </div>
+</div>
+
+
+

@@ -17,24 +17,24 @@ namespace MVCData.Data
       [Required]
       public string Name { get; set; }
       public string PhoneNumber { get; set; }
-      public string City { get; set; }
-      
-      public PersonDB()
+      public City City { get; set; }
+      public int CityId { get; set; }
+    
+    public PersonDB()
         {
 
         }
       
-       public PersonDB (CreatePersonViewModel personInfo)
+       public PersonDB (CreatePersonViewModel personData)
       {
-            Name = personInfo.Name;
-            PhoneNumber = personInfo.PhoneNumber;
-            City = personInfo.City;
-      }
+            Name = personData.Name;
+            PhoneNumber = personData.PhoneNumber;
+            CityId = personData.CityId;
+        }
       public PersonDB(Person source)
       {
                 Name = source.Name;
                 PhoneNumber = source.PhoneNumber;
-                City = source.City;
                 ID = source.ID;
       }
    

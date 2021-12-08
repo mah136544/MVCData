@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace MVCData.Models
 {
-    public class DBModel : Controller
+    public class DBModel 
     {
         protected Controller aController;
         protected readonly MVCEFDbContext EFDBContext;
 
         public List<PersonDB> People;
         public List<MLink> MLinks;
+        public List<City> Cities;
+        public List<Country> Countries;
+       
         public readonly List<string> TableRowClasses;
+
 
         public DBModel(Controller aController, MVCEFDbContext dbContext)
         {
@@ -31,8 +35,13 @@ namespace MVCData.Models
         {
         People= EFDBContext.People.ToList();
         MLinks = EFDBContext.MLinks.ToList();
-         //dynamic MLinks = null;
-         aController.ViewBag.MLinks = MLinks; 
+            //dynamic MLinks = null;
+        Cities = EFDBContext.Cities.ToList();
+        Countries = EFDBContext.Countries.ToList();
+       
+        aController.ViewBag.Cities = Cities;         // Make City List för Partial View AddPerson
+        aController.ViewBag.Countries = Countries;   // Make City List för Partial View AddCity
+        aController.ViewBag.MLinks = MLinks; 
         }
 
         public bool RemovePersonFromDB(int ID)

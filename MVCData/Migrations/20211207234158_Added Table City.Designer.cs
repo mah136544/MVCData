@@ -3,14 +3,16 @@ using MVCData.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVCData.Migrations
 {
     [DbContext(typeof(MVCEFDbContext))]
-    partial class MVCEFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211207234158_Added Table City")]
+    partial class AddedTableCity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,7 +115,7 @@ namespace MVCData.Migrations
                         {
                             Name = "AJAX",
                             LinkURL = "/AJAX/",
-                            Title = "AJAX"
+                            Title = "AJAX Mode"
                         },
                         new
                         {

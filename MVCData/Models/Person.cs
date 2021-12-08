@@ -48,7 +48,7 @@ namespace MVCData.Models
         {
             Name = source.Name;
             PhoneNumber = source.PhoneNumber;
-            City = source.City;
+            City = source.City != null ? source.City.Name : string.Empty;
             ID = source.ID;
          }
         
@@ -59,7 +59,7 @@ namespace MVCData.Models
         {
             Name = personData.Name;
             PhoneNumber = personData.PhoneNumber;
-            City = personData.City;
+           
         }
 
         public Person(string aName, string aCity, string aPhoneNumber)
