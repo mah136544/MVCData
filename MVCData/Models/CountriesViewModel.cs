@@ -4,15 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MVCData.Controllers;
 
 namespace MVCData.Models
 {
     public class CountriesViewModel : DBModel
     {
-        public CountriesViewModel(Controller aController, MVCEFDbContext dbContext) : base(aController, dbContext)
+        public CountriesViewModel(Controller aController, Data.DatabaseMVCEFDbContext dbContext) : base(aController, dbContext)
         {
 
         }
+
+        
 
         public Country AddCountry(CreateCountryViewModel countryData)
         {

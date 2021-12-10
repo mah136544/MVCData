@@ -42,11 +42,8 @@ namespace MVCData.Controllers
         }
 
     }
-
-    public class DatabaseMVCEFDbContext
-    {
-    }
 }
 
 
-   
+
+

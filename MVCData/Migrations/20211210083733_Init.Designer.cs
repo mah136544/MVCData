@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVCData.Migrations
 {
-    [DbContext(typeof(MVCEFDbContext))]
-    [Migration("20211208104324_Init")]
+    [DbContext(typeof(DatabaseMVCEFDbContext))]
+    [Migration("20211210083733_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,62 @@ namespace MVCData.Migrations
                         {
                             Id = 1,
                             CountryCode = "IR",
-                            Name = "Iran"
+                            Name = "IRAN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryCode = "NO",
+                            Name = "Norge"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryCode = "US",
+                            Name = "USA"
+                        });
+                });
+
+            modelBuilder.Entity("MVCData.Data.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Svenska"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Norska"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Danska"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Persiska"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Arabiska"
                         });
                 });
 
@@ -128,6 +183,12 @@ namespace MVCData.Migrations
                             Name = "Countries",
                             LinkURL = "/Countries/",
                             Title = "Countries"
+                        },
+                        new
+                        {
+                            Name = "Languages",
+                            LinkURL = "/Languages/",
+                            Title = "Languages"
                         },
                         new
                         {
@@ -184,6 +245,38 @@ namespace MVCData.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MVCData.Data.PersonLanguage", b =>
+                {
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonId", "LanguageId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("PersonLanguages");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonId = 1,
+                            LanguageId = 1
+                        },
+                        new
+                        {
+                            PersonId = 2,
+                            LanguageId = 1
+                        },
+                        new
+                        {
+                            PersonId = 3,
+                            LanguageId = 1
+                        });
+                });
+
             modelBuilder.Entity("MVCData.Data.City", b =>
                 {
                     b.HasOne("MVCData.Data.Country", "Country")
@@ -198,6 +291,21 @@ namespace MVCData.Migrations
                     b.HasOne("MVCData.Data.City", "City")
                         .WithMany("People")
                         .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MVCData.Data.PersonLanguage", b =>
+                {
+                    b.HasOne("MVCData.Data.Language", "Language")
+                        .WithMany("People")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MVCData.Data.PersonDB", "Person")
+                        .WithMany("Languages")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

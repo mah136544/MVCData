@@ -24,6 +24,36 @@ namespace MVCData.Data
 
         public List<City> Cities { get; set; }
 
+        public string CitiesString
+        {
+            get
+            {
+                List<City> cityList = Cities;
+                string citiesString;
+
+                if (cityList != null)
+                {
+                    citiesString = String.Format("{0}: ", cityList.Count);
+
+                    int i = 0;
+                    foreach (var item in cityList)
+                    {
+                        if (i > 0)
+                        {
+                            citiesString += ",";
+                        }
+                        citiesString += item.Name;
+                        i++;
+                    }
+                }
+                else
+                {
+                    citiesString = "0";
+                }
+                return citiesString;
+            }
+        }
+
         public Country()
         {
 

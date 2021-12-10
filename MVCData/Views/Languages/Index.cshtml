@@ -1,14 +1,14 @@
 ﻿@using MVCData.Models;
-@model CountriesViewModel;
+@model LanguagesViewModel
 
 @{
-    ViewData["Title"] = "Countries";
+    ViewData["Title"] = "Languages";
 
-    var createCountryViewModel = new CreateCountryViewModel();    // Create an emtpy view-model for use in the partial view AddPerson
+    var createLanguageViewModel = new CreateLanguageViewModel();    // Create an emtpy view-model for use in the partial view AddLanguage
+
 }
-
 <p></p>
-<partial name="AddCountry" model="createCountryViewModel" />
+<partial name="AddLanguage" model="createLanguageViewModel" />
 <p></p>
 
 <div class="container">
@@ -19,28 +19,26 @@
     </div>
     <div class="tableHeader row">
         <div class="col-lg-1">Nr.</div>
-        <div class="col-lg-2">Name:</div>
-        <div class="col-lg-2">Country Code:</div>
-        <div class="col-lg-6">Cities:</div>
+        <div class="col-lg-3">Name:</div>
+        <div class="col-lg-7">People:</div>
         <div class="col-lg-1">&nbsp;</div>
     </div>
     @{
         string rowclass;
 
-        int count = Model.Countries.Count;
+        int count = Model.Languages.Count;
         for (int i = 0; i < count; i++)
         {
-            var item = Model.Countries[i];
+            var item = Model.Languages[i];
 
             int rowClassIndex = (i % 2);
             rowclass = Model.TableRowClasses[rowClassIndex];
             <div class="@rowclass row">
                 <div class="col-lg-1">@(i + 1)</div>
-                <div class="col-lg-2">@item.Name</div>
-                <div class="col-lg-2">@item.CountryCode</div>
-                <div class="col-lg-6">@item.CitiesString</div>
+                <div class="col-lg-3">@item.Name</div>
+                <div class="col-lg-7">@item.PeopleString</div>
                 <div class="col-lg-1">
-                    <a href="/Countries/DeleteCountry?id=@item.Id">Remove</a>
+                    <a href="/Languages/DeleteLanguage?id=@item.Id">Remove</a>
                 </div>
             </div>
         }
@@ -50,6 +48,9 @@
         <div class="col-lg-2">@count item(s)</div>
     </div>
 </div>
+
+
+
 
 
 

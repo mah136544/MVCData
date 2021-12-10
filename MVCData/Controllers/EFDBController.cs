@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MVCData.Data;
+﻿using MVCData.Data;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +9,15 @@ namespace MVCData.Controllers
 {
     public class EFDBController : Controller
     {
-        public readonly MVCEFDbContext EFDBContext; 
-        public EFDBController(MVCEFDbContext context)
-        {
+        public readonly DatabaseMVCEFDbContext EFDBContext; 
+        
+    public  EFDBController(DatabaseMVCEFDbContext context)
+    {
             EFDBContext = context;
-        }
-
-        public EFDBController(DatabaseMVCEFDbContext context)
-        {
-            Context = context;
-        }
-
-        public DatabaseMVCEFDbContext Context { get; }
     }
+
+    }
+
+
 }
+

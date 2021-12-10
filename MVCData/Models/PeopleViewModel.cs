@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MVCData.Controllers;
 
 namespace MVCData.Models
 {
@@ -16,17 +17,17 @@ namespace MVCData.Models
 
         public string SearchFor { get => searchFor; set { searchFor = value; } }
 
-        public PeopleViewModel(Controller aController, MVCEFDbContext dbContext): base(aController,dbContext)
+
+        public PeopleViewModel(Controller aController, DatabaseMVCEFDbContext dbContext): base(aController,dbContext)
         {
             
             PeopleToDisplay = new List<Person>();
         }
+        
         public override void PrepareView()
         {
             int peopleToDisplayIndex = 0;
             bool addPerson = false;
-
-       
 
             PeopleToDisplay.Clear();
 
@@ -54,6 +55,7 @@ namespace MVCData.Models
                 }
             }
         }
+
         public PersonDB AddPerson(CreatePersonViewModel personData)
         {
             PersonDB person = null;
@@ -63,9 +65,76 @@ namespace MVCData.Models
                 person = new PersonDB(personData);
 
                 AddPersonToDB(person);
+
+                int[] languageIDList = personData.Languages;
+                if (languageIDList != null)
+                {
+                    PersonLanguage pl;
+
+                    foreach (var languageID in languageIDList)
+                    {
+                        pl = new PersonLanguage();
+                        pl.PersonId = person.ID;
+                        pl.LanguageId = languageID;
+                        EFDBContext.PersonLanguages.Add(pl);
+                    }
+                    EFDBContext.SaveChanges();
+                }
             }
 
             return person;
+        }
+
+        public bool UpdatePerson(UpdatePersonViewModel personData)
+        {
+            bool success = false;
+
+            if (aController.ModelState.IsValid)
+            {
+                int id = personData.Id;
+                PersonDB person = EFDBContext.People.Find(id);
+
+                if (person != null)
+                {
+                    person.Name = personData.Name;
+                    person.PhoneNumber = personData.PhoneNumber;
+                    person.CityId = personData.CityId;
+
+                    PersonLanguage pl;
+                    int[] languageIDList = personData.Languages;
+
+                    if (languageIDList != null)
+                    {
+                        if (person.Languages != null)
+                        {
+                            person.Languages.Clear();
+
+                            foreach (var languageID in languageIDList)
+                            {
+                                pl = new PersonLanguage();
+                                pl.PersonId = id;
+                                pl.LanguageId = languageID;
+                                person.Languages.Add(pl);
+                            }
+                        }
+                        else
+                        {       // Person doesn't have any languages..
+                            foreach (var languageID in languageIDList)
+                            {
+                                pl = new PersonLanguage();
+                                pl.PersonId = id;
+                                pl.LanguageId = languageID;
+                                EFDBContext.PersonLanguages.Add(pl);
+                            }
+                        }
+                    }
+
+                    EFDBContext.People.Update(person);
+                    EFDBContext.SaveChanges();
+                }
+            }
+
+            return success;
         }
 
         public bool DeletePerson(int itemIndex)
@@ -83,11 +152,11 @@ namespace MVCData.Models
             return RemovePersonFromDB(aPersonID);
         }
 
-        public PersonDB FindPersonByID(int aPersonID)
+        public Person FindPersonByID(int aPersonID)
         {
-            PersonDB person = null;
+            Person person = null;
 
-            foreach (var item in People)
+            foreach (var item in PeopleToDisplay)
             {
                 if (item.ID == aPersonID)
                 {
@@ -97,23 +166,10 @@ namespace MVCData.Models
             }
             return person;
         }
-    }
-}
 
-
-
-
-
-
-
-
-
-
-
-
-         
         
+    }
 
-
-
+  
+}
 

@@ -26,19 +26,18 @@
             }
             else
             {
-        <div>@Html.Raw("&nbsp;")</div>
+                <div>@Html.Raw("&nbsp;")</div>
             }
         </div>
-
-
-
-    </div>
         <div class="tableHeader row">
-        <div class="col-lg-1">Nr.</div>
-        <div class="col-lg-4">Name:</div>
-        <div class="col-lg-3">City:</div>
-        <div class="col-lg-3">PhoneNumber:</div>
-        <div class="col-lg-1">&nbsp;</div>
+            <div class="col-lg-1">Nr.</div>
+            <div class="col-lg-3">Name:</div>
+            <div class="col-lg-2">City:</div>
+            <div class="col-lg-2">PhoneNumber:</div>
+            <div class="col-lg-3">Languages:</div>
+            <div class="col-lg-1">&nbsp;</div>
+        </div>
+
     </div>
     @{
         int count = Model.PeopleToDisplay.Count;

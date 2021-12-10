@@ -19,9 +19,7 @@
             <ul class="headerUl">
                 @{
                      //Build the links From Database Table MLink:
-                     Dictionary<string, string> links = new Dictionary<string, string>();
-                     links.Add("AJAX", "AJAX/Index");
-
+                     
                     foreach (var item in ViewBag.MLinks)
                     {
                         <li class="headerLi"><a href="@item.LinkURL">@item.Title</a></li>

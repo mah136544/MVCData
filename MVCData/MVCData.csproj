@@ -5,18 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20211203093522_Init.cs" />
-    <Compile Remove="Migrations\20211203093522_Init.Designer.cs" />
-    <Compile Remove="Migrations\20211203101054_Seeded more Data.cs" />
-    <Compile Remove="Migrations\20211203101054_Seeded more Data.Designer.cs" />
-    <Compile Remove="Migrations\20211203112430_Seeded Ajax.cs" />
-    <Compile Remove="Migrations\20211203112430_Seeded Ajax.Designer.cs" />
-    <Compile Remove="Migrations\20211203130203_Change Name i MLink.cs" />
-    <Compile Remove="Migrations\20211203130203_Change Name i MLink.Designer.cs" />
-    <Compile Remove="Migrations\20211207234158_Added Table City.cs" />
-    <Compile Remove="Migrations\20211207234158_Added Table City.Designer.cs" />
-    <Compile Remove="Migrations\20211208094640_add Table city.cs" />
-    <Compile Remove="Migrations\20211208094640_add Table city.Designer.cs" />
+    <Compile Remove="Migrations\20211208104324_Init.cs" />
+    <Compile Remove="Migrations\20211208104324_Init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

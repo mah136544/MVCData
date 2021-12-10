@@ -11,7 +11,7 @@ namespace MVCData.Controllers
 {
     public class HomeController : EFDBController
     {
-        public HomeController(MVCEFDbContext context) : base(context)
+        public HomeController(DatabaseMVCEFDbContext context) : base(context)
         {
         }
 
@@ -26,6 +26,19 @@ namespace MVCData.Controllers
             return View(peopleViewModel);
         }
 
+        public IActionResult PersonDetails(int id)
+        {
+            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
+
+            peopleViewModel.PrepareView();
+
+            Person person = peopleViewModel.FindPersonByID(id);
+
+            return View(person);
+        }
+
+
+
         [HttpPost]
         public IActionResult AddPerson(CreatePersonViewModel personData)
         {
@@ -35,6 +48,16 @@ namespace MVCData.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult UpdatePerson(UpdatePersonViewModel personData)
+        {
+            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
+
+            peopleViewModel.UpdatePerson(personData);
+
+            return RedirectToAction("Index");
+        }
+
 
         public IActionResult DeletePerson(int id)
         {

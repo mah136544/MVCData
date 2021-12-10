@@ -35,7 +35,7 @@ namespace MVCData
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddDbContext<MVCEFDbContext>(
+            services.AddDbContext<DatabaseMVCEFDbContext>(
               options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));    
                 
                 

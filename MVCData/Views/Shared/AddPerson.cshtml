@@ -19,6 +19,16 @@
             }
         }
     </select>
+    <label asp-for="Languages"></label>
+    <select asp-for="Languages" class="formInputField" multiple size="3">
+        @{
+            // Build the language drop-down list from database table 'Languages':
+            foreach (Language language in ViewBag.Languages)
+            {
+                <option value="@language.Id">@language.Name</option>
+            }
+        }
+    </select>
     <input class="formButton" type="submit" value="Add" />
 </form>
 

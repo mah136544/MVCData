@@ -1,0 +1,26 @@
+﻿@using MVCData.Models;
+@model Person
+
+@{
+        var updatePersonViewModel = new UpdatePersonViewModel(Model);    // Create a view-model for use in the partial view UpdatePerson
+
+        if (Model != null)
+        {
+            ViewBag.SelectedCity = Model.City;
+            ViewBag.SelectedLanguages = Model.Languages;
+            ViewBag.Title = $"Person '{Model.Name}' Details";
+        }
+        else
+        {
+            ViewBag.Title = "PersonDetails";
+        }
+    }
+
+    <partial name="UpdatePerson" model="updatePersonViewModel" />
+
+
+
+
+
+
+

@@ -4,16 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MVCData.Controllers;
 
 namespace MVCData.Models
 {
     
         public class CitiesViewModel: DBModel
         {
-        public CitiesViewModel(Controller aController, MVCEFDbContext dbContext) : base(aController, dbContext)
+        public CitiesViewModel(Controller aController, Data.DatabaseMVCEFDbContext dbContext) : base(aController, dbContext)
         {
 
         }
+
 
         public City AddCity(CreateCityViewModel cityData)
         {

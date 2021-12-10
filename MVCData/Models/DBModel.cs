@@ -4,23 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MVCData.Controllers;
 
 namespace MVCData.Models
 {
     public class DBModel 
     {
         protected Controller aController;
-        protected readonly MVCEFDbContext EFDBContext;
+        protected readonly Data.DatabaseMVCEFDbContext EFDBContext;
 
         public List<PersonDB> People;
         public List<MLink> MLinks;
         public List<City> Cities;
         public List<Country> Countries;
+        public List<Language> Languages;
+        public List<PersonLanguage> personlanguages;
        
         public readonly List<string> TableRowClasses;
 
 
-        public DBModel(Controller aController, MVCEFDbContext dbContext)
+        public DBModel(Controller aController, Data.DatabaseMVCEFDbContext dbContext)
         {
             this.aController = aController;
             EFDBContext = dbContext;
@@ -31,16 +34,22 @@ namespace MVCData.Models
 
             ReadDB();
         }
+
+        
+
         public void ReadDB()
         {
         People= EFDBContext.People.ToList();
-        MLinks = EFDBContext.MLinks.ToList();
-           
+        MLinks = EFDBContext.MLinks.ToList();  
         Cities = EFDBContext.Cities.ToList();
         Countries = EFDBContext.Countries.ToList();
-       
-        aController.ViewBag.Cities = Cities;         // Make City List för Partial View AddPerson
-        aController.ViewBag.Countries = Countries;   // Make City List för Partial View AddCity
+        Languages = EFDBContext.Languages.ToList();
+        personlanguages = EFDBContext.PersonLanguages.ToList();
+        
+            
+        aController.ViewBag.Cities = Cities;              // Make City List för Partial View AddPerson
+        aController.ViewBag.Languages = Languages;   //  Make Language list för för AddPerson
+        aController.ViewBag.Countries = Countries;       // Make Country List för Partial View AddCity
         aController.ViewBag.MLinks = MLinks; 
         }
 
@@ -72,11 +81,6 @@ namespace MVCData.Models
         {
 
         }
-
-
-
-
-
     }
 
 

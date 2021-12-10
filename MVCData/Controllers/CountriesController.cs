@@ -11,7 +11,7 @@ namespace MVCData.Controllers
     public class CountriesController : EFDBController
     {
          
-public CountriesController(DatabaseMVCEFDbContext context) : base(context)
+    public CountriesController(DatabaseMVCEFDbContext context) : base(context)
         {
         }
 
@@ -41,5 +41,7 @@ public CountriesController(DatabaseMVCEFDbContext context) : base(context)
         }
     }
 }
+
+
 
 

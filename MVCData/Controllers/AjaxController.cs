@@ -10,7 +10,7 @@ namespace MVCData.Controllers
 {
     public class AjaxController : EFDBController
     {
-       public AjaxController(MVCEFDbContext context): base(context)
+       public AjaxController(DatabaseMVCEFDbContext context): base(context)
         {
         }
        
@@ -42,18 +42,15 @@ namespace MVCData.Controllers
             }
 
             return PartialView("_PersonDetailsPartial", person);
+            }
 
+      [HttpPost]
+        public IActionResult DeletePersonByIndex(int personIndex)
+         {
+            bool success;
+            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
 
-
-        }
-
-        [HttpPost]
-    public IActionResult DeletePersonByIndex(int personIndex)
-    {
-        bool success;
-        PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
-
-        success = peopleViewModel.DeletePerson(personIndex);
+           success = peopleViewModel.DeletePerson(personIndex);
 
         return StatusCode(success ? 200 : 404);
     }
