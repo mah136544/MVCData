@@ -1,6 +1,7 @@
 ﻿using MVCData.Data;
 using MVCData.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MVCData.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class LanguagesController : EFDBController
     {
         public LanguagesController(DatabaseMVCEFDbContext context) : base(context)
@@ -17,32 +19,29 @@ namespace MVCData.Controllers
 
         public IActionResult Index()
         {
-             LanguagesViewModel languageViewModel = new LanguagesViewModel(this, EFDBContext );
+            LanguagesViewModel languageViewModel = new LanguagesViewModel(this, EFDBContext);
 
             return View(languageViewModel);
-           
         }
 
         [HttpPost]
-        public IActionResult AddLanguage(CreateLanguageViewModel personData)
+        public IActionResult AddLanguage(AddLanguageInputModel personData)
         {
-            LanguagesViewModel LanguageViewModel = new LanguagesViewModel(this, EFDBContext);
+            LanguagesViewModel languageViewModel = new LanguagesViewModel(this, EFDBContext);
 
-            LanguageViewModel.AddLanguage(personData);
+            languageViewModel.AddLanguage(personData);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult DeleteLanguage(int id)
         {
-            LanguagesViewModel LanguageViewModel = new LanguagesViewModel(this, EFDBContext);
-            LanguageViewModel.RemoveLanguageFromDB(id);
+            LanguagesViewModel languageViewModel = new LanguagesViewModel(this, EFDBContext);
+            languageViewModel.RemoveLanguageFromDB(id);
 
             return RedirectToAction("Index");
         }
 
     }
-
 }
-
 

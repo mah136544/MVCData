@@ -1,6 +1,7 @@
 ﻿using MVCData.Data;
 using MVCData.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace MVCData.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CountriesController : EFDBController
     {
-         
-    public CountriesController(DatabaseMVCEFDbContext context) : base(context)
+        public CountriesController(DatabaseMVCEFDbContext context) : base(context)
         {
         }
 
@@ -23,7 +24,7 @@ namespace MVCData.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCountry(CreateCountryViewModel countryData)
+        public IActionResult AddCountry(AddCountryInputModel countryData)
         {
             CountriesViewModel countyViewModel = new CountriesViewModel(this, EFDBContext);
 
@@ -41,7 +42,4 @@ namespace MVCData.Controllers
         }
     }
 }
-
-
-
 

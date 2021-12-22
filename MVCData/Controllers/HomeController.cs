@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MVCData.Models;
 using MVCData.Data;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,66 +10,137 @@ using System.Threading.Tasks;
 
 namespace MVCData.Controllers
 {
-    public class HomeController : EFDBController
-    {
-        public HomeController(DatabaseMVCEFDbContext context) : base(context)
+    
+       [Authorize]
+        public class HomeController : EFDBController
         {
-        }
+            public HomeController(DatabaseMVCEFDbContext context) : base(context)
+            {
+            }
 
-        public IActionResult Index(string searchFor)
-        {
-            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
+            [AllowAnonymous]
+            public IActionResult Index()
+            {
+                return View();
+            }
 
-            peopleViewModel.SearchFor = searchFor;
-            
-            peopleViewModel.PrepareView();
+            public IActionResult People(string searchFor)
+            {
+                PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
 
-            return View(peopleViewModel);
-        }
+                peopleViewModel.SearchFor = searchFor;
+               
+                peopleViewModel.PrepareView();
 
-        public IActionResult PersonDetails(int id)
-        {
-            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
+                return View(peopleViewModel);
+            }
 
-            peopleViewModel.PrepareView();
+            public IActionResult EditPerson(int id)
+            {
+                PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
 
-            Person person = peopleViewModel.FindPersonByID(id);
+                peopleViewModel.PrepareView();
 
-            return View(person);
-        }
+                Person person = peopleViewModel.FindPersonByID(id);
 
+                return View(person);
+            }
 
+            [HttpPost]
+            public IActionResult AddPerson(AddPersonInputModel personData)
+            {
+                PersonDB person = null;
 
-        [HttpPost]
-        public IActionResult AddPerson(CreatePersonViewModel personData)
-        {
-            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext );
+                if (ModelState.IsValid)
+                {
+                    person = new PersonDB(personData);
 
-            peopleViewModel.AddPerson(personData);
+                    EFDBContext.People.Add(person);
+                    EFDBContext.SaveChanges();
 
-            return RedirectToAction("Index");
-        }
-        [HttpPost]
-        public IActionResult UpdatePerson(UpdatePersonViewModel personData)
-        {
-            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
+                    int[] languageIDList = personData.Languages;
+                    if (languageIDList != null)
+                    {
+                        PersonLanguage pl;
 
-            peopleViewModel.UpdatePerson(personData);
+                        foreach (var languageID in languageIDList)
+                        {
+                            pl = new PersonLanguage();
+                            pl.PersonId = person.ID;
+                            pl.LanguageId = languageID;
+                            EFDBContext.PersonLanguages.Add(pl);
+                        }
+                        EFDBContext.SaveChanges();
+                    }
+                }
 
-            return RedirectToAction("Index");
-        }
+                return RedirectToAction("People");
+            }
 
+            [HttpPost]
+            public IActionResult EditPerson(EditPersonInputModel personData)
+            {
+                if (ModelState.IsValid)
+                {
+                    EFDBContext.PersonLanguages.ToList();         // Read PersonLanguages table
 
-        public IActionResult DeletePerson(int id)
-        {
-            PeopleViewModel peopleViewModel = new PeopleViewModel(this, EFDBContext);
-            peopleViewModel.DeletePerson(id);
+                    int id = personData.Id;
+                    var person = EFDBContext.People.Find(id);
 
-            return RedirectToAction("Index");
+                    if (person != null)
+                    {
+                        person.Name = personData.Name;
+                        person.PhoneNumber = personData.PhoneNumber;
+                        person.CityId = personData.CityId;
+
+                        PersonLanguage pl;
+                        int[] languageIDList = personData.Languages;
+
+                        if (languageIDList != null)
+                        {
+                            if (person.Languages != null)
+                            {
+                                person.Languages.Clear();
+
+                                foreach (var languageID in languageIDList)
+                                {
+                                    pl = new PersonLanguage();
+                                    pl.PersonId = id;
+                                    pl.LanguageId = languageID;
+                                    person.Languages.Add(pl);
+                                }
+                            }
+                            else
+                            {       // Person doesn't have any languages..
+                                foreach (var languageID in languageIDList)
+                                {
+                                    pl = new PersonLanguage();
+                                    pl.PersonId = id;
+                                    pl.LanguageId = languageID;
+                                    EFDBContext.PersonLanguages.Add(pl);
+                                }
+                            }
+                        }
+
+                        EFDBContext.People.Update(person);
+                        EFDBContext.SaveChanges();
+                    }
+                }
+
+                return RedirectToAction("People");
+            }
+
+            public IActionResult DeletePerson(int id)
+            {
+                PersonDB dBPerson = EFDBContext.People.Find(id);
+                if (dBPerson != null)
+                {
+                    EFDBContext.People.Remove(dBPerson);
+                    EFDBContext.SaveChanges();
+                }
+
+                return RedirectToAction("People");
+            }
         }
     }
-}
 
-
-
-    

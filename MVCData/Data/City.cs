@@ -58,7 +58,7 @@ namespace MVCData.Data
 
         }
 
-        public City(CreateCityViewModel cityData)
+        public City(AddCityInputModel cityData)
         {
             Name = cityData.Name;
             CountryId = cityData.CountryId;

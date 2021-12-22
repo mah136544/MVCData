@@ -56,7 +56,7 @@ namespace MVCData.Models
             }
         }
 
-        public PersonDB AddPerson(CreatePersonViewModel personData)
+        public PersonDB AddPerson(AddPersonInputModel personData)
         {
             PersonDB person = null;
 
@@ -85,14 +85,14 @@ namespace MVCData.Models
             return person;
         }
 
-        public bool UpdatePerson(UpdatePersonViewModel personData)
+        public bool EditPerson(EditPersonInputModel personData)
         {
             bool success = false;
 
             if (aController.ModelState.IsValid)
             {
                 int id = personData.Id;
-                PersonDB person = EFDBContext.People.Find(id);
+                var person = EFDBContext.People.Find(id);
 
                 if (person != null)
                 {
@@ -166,10 +166,23 @@ namespace MVCData.Models
             }
             return person;
         }
+        public PersonDB FindDBPersonByID(int aPersonID)
+        {
+            PersonDB person = null;
 
-        
+            foreach (var item in People)
+            {
+                if (item.ID == aPersonID)
+                {
+                    person = item;
+                    break;
+                }
+            }
+            return person;
+        }
+
     }
 
-  
-}
+    }
+
 

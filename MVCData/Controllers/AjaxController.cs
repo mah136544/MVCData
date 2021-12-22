@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCData.Models;
-using MVCData.Data; 
+using MVCData.Data;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MVCData.Controllers
 {
+    [Authorize]
     public class AjaxController : EFDBController
     {
        public AjaxController(DatabaseMVCEFDbContext context): base(context)
@@ -44,7 +47,8 @@ namespace MVCData.Controllers
             return PartialView("_PersonDetailsPartial", person);
             }
 
-      [HttpPost]
+        [Authorize(Roles ="Admin")]
+        [HttpPost]
         public IActionResult DeletePersonByIndex(int personIndex)
          {
             bool success;

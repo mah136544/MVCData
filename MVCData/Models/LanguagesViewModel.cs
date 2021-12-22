@@ -17,7 +17,7 @@ namespace MVCData.Models
 
       
 
-        public Language AddLanguage(CreateLanguageViewModel languageData)
+        public Language AddLanguage(AddLanguageInputModel languageData)
         {
             Language language = null;
 

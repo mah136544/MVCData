@@ -17,7 +17,7 @@ namespace MVCData.Models
         }
 
 
-        public City AddCity(CreateCityViewModel cityData)
+        public City AddCity(AddCityInputModel cityData)
         {
             City city = null;
 

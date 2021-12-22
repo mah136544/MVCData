@@ -59,7 +59,7 @@ namespace MVCData.Data
 
         }
 
-        public Country(CreateCountryViewModel countryData)
+        public Country(AddCountryInputModel countryData)
         {
             Name = countryData.Name;
             CountryCode = countryData.CountryCode.ToUpper();

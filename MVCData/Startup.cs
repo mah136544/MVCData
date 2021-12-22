@@ -1,4 +1,6 @@
 using MVCData.Data;
+using MVCData.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,12 +38,14 @@ namespace MVCData
             });
 
             services.AddDbContext<DatabaseMVCEFDbContext>(
-              options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));    
-                
-                
-            
-            
-            services.AddControllersWithViews();
+              options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+           .AddDefaultUI()
+           .AddDefaultTokenProviders()
+           .AddEntityFrameworkStores<DatabaseMVCEFDbContext>();
+
+           services.AddControllersWithViews();
+           services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +60,9 @@ namespace MVCData
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseSession();
 
             app.UseEndpoints(endpoints =>
@@ -64,6 +71,7 @@ namespace MVCData
                    name: "default",
                    pattern: "{controller=Home}/{action=Index}/{id?}"
                    );
+                endpoints.MapRazorPages();
             });
         }
     }

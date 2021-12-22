@@ -17,7 +17,7 @@ namespace MVCData.Models
 
         
 
-        public Country AddCountry(CreateCountryViewModel countryData)
+        public Country AddCountry(AddCountryInputModel countryData)
         {
             Country country = null;
 

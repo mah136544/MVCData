@@ -59,7 +59,7 @@ namespace MVCData.Data
 
         }
 
-        public PersonDB(CreatePersonViewModel personData)
+        public PersonDB(AddPersonInputModel personData)
         {
             Name = personData.Name;
             PhoneNumber = personData.PhoneNumber;

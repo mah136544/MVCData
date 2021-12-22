@@ -16,6 +16,12 @@
                 <label for="PersonIndexInput">Person #:</label>
                 <input id="PersonIndexInput" class="formInputField" type="number" value="1" min="1" max="@Model.People.Count" />
                 <input type="button" class="formButton" onclick="GetPerson()" value="Person " />
+                @if (User.IsInRole("Admin"))
+                
+                {
+                   <input type="button" class="formButton" onclick="DeletePerson()" value="Delet Person"/>
+                
+                }
                 <input type="button" class="formButton" onclick="DeletePerson()" value="Remove Person" />
             </div>
         </div>

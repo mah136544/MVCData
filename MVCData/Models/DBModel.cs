@@ -1,4 +1,5 @@
 ﻿using MVCData.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,19 @@ namespace MVCData.Models
     public class DBModel 
     {
         protected Controller aController;
-        protected readonly Data.DatabaseMVCEFDbContext EFDBContext;
+        public readonly DatabaseMVCEFDbContext EFDBContext;
 
         public List<PersonDB> People;
-        public List<MLink> MLinks;
         public List<City> Cities;
-        public List<Country> Countries;
+        public List<MLink> MLinks;
         public List<Language> Languages;
         public List<PersonLanguage> personlanguages;
+        public List<Country> Countries;
+       
        
         public readonly List<string> TableRowClasses;
 
-
-        public DBModel(Controller aController, Data.DatabaseMVCEFDbContext dbContext)
+        public DBModel(Controller aController, DatabaseMVCEFDbContext dbContext)
         {
             this.aController = aController;
             EFDBContext = dbContext;
@@ -33,24 +34,28 @@ namespace MVCData.Models
             TableRowClasses.Add("tableRowEven");
 
             ReadDB();
+            
         }
 
-        
 
-        public void ReadDB()
+
+
+        public virtual void ReadDB()
         {
         People= EFDBContext.People.ToList();
-        MLinks = EFDBContext.MLinks.ToList();  
-        Cities = EFDBContext.Cities.ToList();
-        Countries = EFDBContext.Countries.ToList();
         Languages = EFDBContext.Languages.ToList();
         personlanguages = EFDBContext.PersonLanguages.ToList();
+        Cities = EFDBContext.Cities.ToList();
+        Countries = EFDBContext.Countries.ToList();
+            //MLinks = EFDBContext.MLinks.ToList(); 
+
+            aController.ViewBag.Languages = Languages;   //  Make Language list för för AddPerson    
+            aController.ViewBag.Mlinks = MLinks;         //Make MLinks for the Layout
+
+            aController.ViewBag.Cities = Cities;              // Make City List för Partial View AddPerson
         
-            
-        aController.ViewBag.Cities = Cities;              // Make City List för Partial View AddPerson
-        aController.ViewBag.Languages = Languages;   //  Make Language list för för AddPerson
-        aController.ViewBag.Countries = Countries;       // Make Country List för Partial View AddCity
-        aController.ViewBag.MLinks = MLinks; 
+            aController.ViewBag.Countries = Countries;       // Make Country List för Partial View AddCity
+        
         }
 
         public bool RemovePersonFromDB(int ID)
@@ -81,6 +86,8 @@ namespace MVCData.Models
         {
 
         }
+
+       
     }
 
 

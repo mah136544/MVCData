@@ -54,7 +54,7 @@ namespace MVCData.Data
 
         }
 
-        public Language(CreateLanguageViewModel languageData)
+        public Language(AddLanguageInputModel languageData)
         {
             Name = languageData.Name;
         }
