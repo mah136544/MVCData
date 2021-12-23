@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCData.Migrations
 {
     [DbContext(typeof(DatabaseMVCEFDbContext))]
-    [Migration("20211217095949_Added Identity")]
-    partial class AddedIdentity
+    [Migration("20211222153639_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,58 +144,6 @@ namespace MVCData.Migrations
                         {
                             Id = 5,
                             Name = "Arabiska"
-                        });
-                });
-
-            modelBuilder.Entity("MVCData.Data.MLink", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("LinkURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.HasKey("Name");
-
-                    b.ToTable("MLinks");
-
-                    b.HasData(
-                        new
-                        {
-                            Name = "AJAX",
-                            LinkURL = "/Ajax/Index",
-                            Title = "AJAX"
-                        },
-                        new
-                        {
-                            Name = "Cities",
-                            LinkURL = "/Cities/",
-                            Title = "Cities"
-                        },
-                        new
-                        {
-                            Name = "Countries",
-                            LinkURL = "/Countries/",
-                            Title = "Countries"
-                        },
-                        new
-                        {
-                            Name = "Languages",
-                            LinkURL = "/Languages/",
-                            Title = "Languages"
-                        },
-                        new
-                        {
-                            Name = "People",
-                            LinkURL = "/Home/",
-                            Title = "People"
                         });
                 });
 
@@ -353,6 +301,27 @@ namespace MVCData.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ed754cba-bd58-4bd8-881b-1ef87cf1acc1",
+                            AccessFailedCount = 0,
+                            BirthDate = "1998-11-18",
+                            ConcurrencyStamp = "dd1c14ac-d2bf-4a10-8a87-32500be9770e",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOlghpPEdFG78EMfM0IzlVVGZqKbtE4NZj++VOsiAepMCiHWE9BGkkb/CgDKU/GEYw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f8e2fdc1-f89b-458c-8955-82f3a1e314ed",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -380,6 +349,22 @@ namespace MVCData.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "08ad1097-1e13-47d1-84d7-7b30f51add51",
+                            ConcurrencyStamp = "3b465273-e285-404c-bf45-5b8f58a9bf71",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "29736e18-d496-482a-b605-2c6e30236d13",
+                            ConcurrencyStamp = "9de1981f-e34a-405d-a06f-72d8e4edab38",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -465,6 +450,13 @@ namespace MVCData.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "ed754cba-bd58-4bd8-881b-1ef87cf1acc1",
+                            RoleId = "08ad1097-1e13-47d1-84d7-7b30f51add51"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
