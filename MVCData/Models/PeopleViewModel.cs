@@ -1,73 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MVCData.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MVCData.Controllers;
 
 namespace MVCData.Models
 {
-    public class PeopleViewModel
+    public class PeopleViewModel :DBModel 
     {
-        private Controller aController;
         private string searchFor;
-
-        public readonly List<Person> People;
+        
         public readonly List<Person> PeopleToDisplay;
-        public readonly List<string> TableRowClasses;
-
-        public string CookieString
-        {
-            get
-            {
-                string cookieString = string.Empty;
-
-                foreach (var person in People)
-                {
-                    cookieString += person.CookieString;
-                }
-                return cookieString;
-            }
-
-            set
-            {
-                if (value != null)
-                {
-                    string[] cookieLines = value.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach (var line in cookieLines)
-                    {
-                        Person person = new Person();
-                        person.CookieString = line;
-                        AddPerson(person, false);
-                    }
-                }
-            }
-        }
 
         public string SearchFor { get => searchFor; set { searchFor = value; } }
 
-        
 
-        public PeopleViewModel(Controller aController)
+        public PeopleViewModel(Controller aController, DatabaseMVCEFDbContext dbContext): base(aController,dbContext)
         {
-            this.aController = aController;
-            People = new List<Person>();
+            
             PeopleToDisplay = new List<Person>();
-
-            TableRowClasses = new List<string>();
-            TableRowClasses.Add("tableRowOdd");
-            TableRowClasses.Add("tableRowEven");
-
-            CookieString = aController.Request.Cookies["people"]; // Add people from cookie
         }
-
-        public void PrepareView()
+        
+        public override void PrepareView()
         {
             int peopleToDisplayIndex = 0;
             bool addPerson = false;
-
-            
 
             PeopleToDisplay.Clear();
 
@@ -75,7 +35,7 @@ namespace MVCData.Models
             {
                 if (searchFor != null && searchFor.Length > 0)
                 {
-                    if (person.Name.Contains(searchFor) || person.City.Contains(searchFor))
+                    if (person.Name.Contains(searchFor) || person.City.Name.Contains(searchFor))
                     {
                         addPerson = true;
                     }
@@ -88,7 +48,7 @@ namespace MVCData.Models
                 if (addPerson)
                 {
                     Person personInPeopleToDisplayList = new Person(person);    // Create a copy of person
-                    personInPeopleToDisplayList.ItemIndex = peopleToDisplayIndex;   // Assign a new ItemIndex (which is its index in the PeopleToDisplay list)
+                    personInPeopleToDisplayList.ItemIndex = peopleToDisplayIndex;   // Assign an ItemIndex (which is its index in the PeopleToDisplay list)
 
                     PeopleToDisplay.Add(personInPeopleToDisplayList);
                     peopleToDisplayIndex++;
@@ -96,62 +56,133 @@ namespace MVCData.Models
             }
         }
 
-        public Person AddPerson(string aName, string aCity, string aPhoneNumber)
+        public PersonDB AddPerson(AddPersonInputModel personData)
         {
-            Person person = new Person(aName, aCity, aPhoneNumber);
-            AddPerson(person, true);
-
-            return person;
-        }
-
-        public void DeletePerson(int itemIndex)
-        {
-            if (itemIndex >= 0 && itemIndex < People.Count)
-            {
-                People.RemoveAt(itemIndex);
-                WritePeopleCookie(CookieString);
-            }
-        }
-
-        public void WritePeopleCookie(string cookieString)
-        {
-            CookieOptions option = new CookieOptions();
-            option.Expires = DateTime.Now.AddDays(10);
-            aController.Response.Cookies.Append("people", cookieString, option);
-        }
-
-        public Person AddPerson(CreatePersonViewModel personData)
-        {
-            Person person = null;
+            PersonDB person = null;
 
             if (aController.ModelState.IsValid)
             {
-                person = new Person(personData);
+                person = new PersonDB(personData);
 
-                AddPerson(person, true);
+                AddPersonToDB(person);
+
+                int[] languageIDList = personData.Languages;
+                if (languageIDList != null)
+                {
+                    PersonLanguage pl;
+
+                    foreach (var languageID in languageIDList)
+                    {
+                        pl = new PersonLanguage();
+                        pl.PersonId = person.ID;
+                        pl.LanguageId = languageID;
+                        EFDBContext.PersonLanguages.Add(pl);
+                    }
+                    EFDBContext.SaveChanges();
+                }
             }
 
             return person;
         }
 
-        public int AddPerson(Person aPerson, bool UpdateDB)
+        public bool EditPerson(EditPersonInputModel personData)
         {
-            int itemIndex = People.Count;
+            bool success = false;
 
-            aPerson.ID = itemIndex;
-            aPerson.ItemIndex = itemIndex;
-
-            People.Add(aPerson);
-
-            if (UpdateDB)
+            if (aController.ModelState.IsValid)
             {
-                WritePeopleCookie(CookieString);
+                int id = personData.Id;
+                var person = EFDBContext.People.Find(id);
+
+                if (person != null)
+                {
+                    person.Name = personData.Name;
+                    person.PhoneNumber = personData.PhoneNumber;
+                    person.CityId = personData.CityId;
+
+                    PersonLanguage pl;
+                    int[] languageIDList = personData.Languages;
+
+                    if (languageIDList != null)
+                    {
+                        if (person.Languages != null)
+                        {
+                            person.Languages.Clear();
+
+                            foreach (var languageID in languageIDList)
+                            {
+                                pl = new PersonLanguage();
+                                pl.PersonId = id;
+                                pl.LanguageId = languageID;
+                                person.Languages.Add(pl);
+                            }
+                        }
+                        else
+                        {       // Person doesn't have any languages..
+                            foreach (var languageID in languageIDList)
+                            {
+                                pl = new PersonLanguage();
+                                pl.PersonId = id;
+                                pl.LanguageId = languageID;
+                                EFDBContext.PersonLanguages.Add(pl);
+                            }
+                        }
+                    }
+
+                    EFDBContext.People.Update(person);
+                    EFDBContext.SaveChanges();
+                }
             }
-            return itemIndex;
+
+            return success;
         }
+
+        public bool DeletePerson(int itemIndex)
+        {
+            bool success = false;
+            if (itemIndex >= 0 && itemIndex < People.Count)
+            {
+                success = RemovePersonFromDB(People[itemIndex].ID);
+            }
+            return success;
+        }
+
+        public bool DeletePersonByID(int aPersonID)
+        {
+            return RemovePersonFromDB(aPersonID);
+        }
+
+        public Person FindPersonByID(int aPersonID)
+        {
+            Person person = null;
+
+            foreach (var item in PeopleToDisplay)
+            {
+                if (item.ID == aPersonID)
+                {
+                    person = item;
+                    break;
+                }
+            }
+            return person;
+        }
+        public PersonDB FindDBPersonByID(int aPersonID)
+        {
+            PersonDB person = null;
+
+            foreach (var item in People)
+            {
+                if (item.ID == aPersonID)
+                {
+                    person = item;
+                    break;
+                }
+            }
+            return person;
+        }
+
     }
-}
+
+    }
 
 
-    
-  

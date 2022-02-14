@@ -2,56 +2,25 @@
 @model PeopleViewModel
 
 @{
-
-    ViewData["Title"] = "People ";
-
-    var createPersonViewModel = new CreatePersonViewModel();    // Create an emtpy view-model for use in the partial view AddPerson
+    ViewData["Title"] = "Home";
 }
-<form class="form" id="SearchForm" asp-action="Index" asp-controller="Home" method="get">
-    <label for="searchFor">Search for :</label>
-    <input class="formInputField" type="text" id="searchFor" name="searchFor" />
-    <input class="formButton" type="submit" value="Search" />
 
-</form>
-<p></p>
-<partial name="AddPerson" model="createPersonViewModel" />
-<p></p>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            @if (Model.SearchFor != null)
-            {
-                string str = $"Filter: '{Model.SearchFor}'";
+<p>Hello & welcome to Mahnoush page</p>
 
-            }
-
-
-        </div>
-        
-
-        
-    </div>
-        <div class="tableHeader row">
-        <div class="col-lg-1">Nr.</div>
-        <div class="col-lg-4">Name:</div>
-        <div class="col-lg-3">City:</div>
-        <div class="col-lg-3">PhoneNumber:</div>
-        <div class="col-lg-1">&nbsp;</div>
-    </div>
-    @{
-        int count = Model.PeopleToDisplay.Count;
-        for (int i = 0; i < count; i++)
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("Admin"))
         {
-            var item = Model.PeopleToDisplay[i];
-
-            int rowClassIndex = (i % 2);
-            item.RowClass = Model.TableRowClasses[rowClassIndex];
-            <partial name="_PersonView" model="item" />
+            <p>Hello Admin!</p>
+        }
+        if (User.IsInRole("User"))
+        {
+            <p>Hello User!</p>
         }
     }
-    <div class="tableFooter row">
-        <div class="col-lg-10">&nbsp;</div>
-        <div class="col-lg-2">@count item(s)</div>
-    </div>
-</div>
-
+    else
+    {
+        <p><a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="/Home/People">Register</a> to acess the site, or <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="/Home/People">Login</a> if you already have an account</p>
+    }
+}

@@ -1,13 +1,17 @@
-﻿using System;
+﻿using MVCData.Data; 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVCData.Models
 {
+    public enum Column5Modes { RemoveLink, DisplayID }
+
     public class Person
     {
         private int itemIndex;
+        private Column5Modes column5Mode;
 
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
@@ -17,49 +21,47 @@ namespace MVCData.Models
         public int ItemIndex { get => itemIndex; set { itemIndex = value; } }
 
         public string RowClass { get; set; }
+        public string Languages { get; set; }
 
-        public string CookieString
-        {
-            get { return $"{Name},{PhoneNumber},{City}\r\n"; }
-            set
-            {
-                string[] cookieParameters = value.Split(',');
-                if (cookieParameters.Length > 0)
-                {
-                    Name = cookieParameters[0];
-                }
-                if (cookieParameters.Length > 1)
-                {
-                    PhoneNumber = cookieParameters[1];
-                }
-                if (cookieParameters.Length > 2)
-                {
-                    City = cookieParameters[2];
-                }
-            }
-        }
+        public Column5Modes Column5Mode { get => column5Mode; set { column5Mode = value; } }
+            
 
         public Person()
         {
             Name = string.Empty;
             PhoneNumber = string.Empty;
             City = string.Empty;
+            Languages = String.Empty;
         }
 
         public Person(Person source)
         {
             Name = source.Name;
             PhoneNumber = source.PhoneNumber;
+            Languages = source.Languages;
             City = source.City;
             ID = source.ID;
             itemIndex = source.itemIndex;
+            column5Mode = source.column5Mode;
         }
 
-        public Person(CreatePersonViewModel personData)
+        public Person(PersonDB source)
+        {
+            Name = source.Name;
+            PhoneNumber = source.PhoneNumber;
+            City = source.City != null ? source.City.Name : string.Empty;
+            ID = source.ID;
+            Languages = source.LanguagesString;
+        }
+        
+        
+        
+        
+        public Person(AddPersonInputModel personData)
         {
             Name = personData.Name;
             PhoneNumber = personData.PhoneNumber;
-            City = personData.City;
+           
         }
 
         public Person(string aName, string aCity, string aPhoneNumber)
@@ -72,6 +74,6 @@ namespace MVCData.Models
 }
 
 
-    
-    
-  
+
+
+
