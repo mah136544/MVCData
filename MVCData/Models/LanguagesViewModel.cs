@@ -17,20 +17,20 @@ namespace MVCData.Models
 
       
 
-        public Language AddLanguage(AddLanguageInputModel languageData)
+        public DBLanguage AddLanguage(AddLanguageInputModel languageData)
         {
-            Language language = null;
+            DBLanguage language = null;
 
             if (aController.ModelState.IsValid)
             {
-                language = new Language(languageData);
+                language = new DBLanguage(languageData);
 
                 AddLanguageToDB(language);
             }
 
             return language;
         }
-        public int AddLanguageToDB(Language aLanguage)
+        public int AddLanguageToDB(DBLanguage aLanguage)
         {
             aLanguage.Id = 0;                                 // Set ID to 0 to allow addition to database
 
@@ -43,7 +43,7 @@ namespace MVCData.Models
         {
             bool success = false;
 
-            Language language = EFDBContext.Languages.Find(ID);
+            DBLanguage language = EFDBContext.Languages.Find(ID);
             if (language != null)
             {
                 Languages.Remove(language);

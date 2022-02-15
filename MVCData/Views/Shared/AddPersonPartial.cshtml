@@ -12,7 +12,7 @@
     <select asp-for="CityId" class="formInputField">
         @{
             // Build the city drop-down list from database table 'Cities':
-            foreach (City city in ViewBag.Cities)
+            foreach (DBCity city in ViewBag.Cities)
             {
                 <option value="@city.Id">@city.Name</option>
             }
@@ -22,7 +22,7 @@
     <select asp-for="Languages" class="formInputField" multiple size="3">
         @{
             // Build the language drop-down list from database table 'Languages':
-            foreach (Language language in ViewBag.Languages)
+            foreach (DBLanguage language in ViewBag.Languages)
             {
                 <option value="@language.Id">@language.Name</option>
             }

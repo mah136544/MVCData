@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MVCData.Migrations
+namespace React.Migrations
 {
     [DbContext(typeof(DatabaseMVCEFDbContext))]
     partial class DatabaseMVCEFDbContextModelSnapshot : ModelSnapshot
@@ -18,47 +18,6 @@ namespace MVCData.Migrations
                 .HasAnnotation("ProductVersion", "3.1.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("MVCData.Data.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Cities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CountryId = 1,
-                            Name = "Tehran"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CountryId = 1,
-                            Name = "Shiraz"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CountryId = 1,
-                            Name = "Mashhad"
-                        });
-                });
 
             modelBuilder.Entity("MVCData.Data.Country", b =>
                 {
@@ -102,7 +61,48 @@ namespace MVCData.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MVCData.Data.Language", b =>
+            modelBuilder.Entity("MVCData.Data.DBCity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            Name = "Tehran"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 1,
+                            Name = "Shiraz"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryId = 1,
+                            Name = "Mashhad"
+                        });
+                });
+
+            modelBuilder.Entity("MVCData.Data.DBLanguage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -303,10 +303,10 @@ namespace MVCData.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ed754cba-bd58-4bd8-881b-1ef87cf1acc1",
+                            Id = "1f88ebd1-5e89-4b7a-a354-56b3bfef4334",
                             AccessFailedCount = 0,
                             BirthDate = "1998-11-18",
-                            ConcurrencyStamp = "dd1c14ac-d2bf-4a10-8a87-32500be9770e",
+                            ConcurrencyStamp = "21e2f295-24c2-425b-b5b2-645d76d64caf",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -314,9 +314,9 @@ namespace MVCData.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOlghpPEdFG78EMfM0IzlVVGZqKbtE4NZj++VOsiAepMCiHWE9BGkkb/CgDKU/GEYw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIhMThHGQ0BwhTHuB4M3iH9QA1Gh3SD0osK60oVT+JOuK7/jnMOif7zhQbDiakGvlQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f8e2fdc1-f89b-458c-8955-82f3a1e314ed",
+                            SecurityStamp = "5cd2efe3-4323-49f6-9abf-01425bc622c1",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -351,15 +351,15 @@ namespace MVCData.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "08ad1097-1e13-47d1-84d7-7b30f51add51",
-                            ConcurrencyStamp = "3b465273-e285-404c-bf45-5b8f58a9bf71",
+                            Id = "329a9908-80a5-420c-9c78-d806e05bf6e5",
+                            ConcurrencyStamp = "922acb02-3123-41c8-8990-77060e446229",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "29736e18-d496-482a-b605-2c6e30236d13",
-                            ConcurrencyStamp = "9de1981f-e34a-405d-a06f-72d8e4edab38",
+                            Id = "9d1ef9dd-a224-4a30-ab2b-515af19af9c9",
+                            ConcurrencyStamp = "88d6c433-516a-400f-a255-8d19ae6a3e57",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -452,8 +452,8 @@ namespace MVCData.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "ed754cba-bd58-4bd8-881b-1ef87cf1acc1",
-                            RoleId = "08ad1097-1e13-47d1-84d7-7b30f51add51"
+                            UserId = "1f88ebd1-5e89-4b7a-a354-56b3bfef4334",
+                            RoleId = "329a9908-80a5-420c-9c78-d806e05bf6e5"
                         });
                 });
 
@@ -476,7 +476,7 @@ namespace MVCData.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MVCData.Data.City", b =>
+            modelBuilder.Entity("MVCData.Data.DBCity", b =>
                 {
                     b.HasOne("MVCData.Data.Country", "Country")
                         .WithMany("Cities")
@@ -487,7 +487,7 @@ namespace MVCData.Migrations
 
             modelBuilder.Entity("MVCData.Data.PersonDB", b =>
                 {
-                    b.HasOne("MVCData.Data.City", "City")
+                    b.HasOne("MVCData.Data.DBCity", "City")
                         .WithMany("People")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -496,7 +496,7 @@ namespace MVCData.Migrations
 
             modelBuilder.Entity("MVCData.Data.PersonLanguage", b =>
                 {
-                    b.HasOne("MVCData.Data.Language", "Language")
+                    b.HasOne("MVCData.Data.DBLanguage", "Language")
                         .WithMany("People")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)

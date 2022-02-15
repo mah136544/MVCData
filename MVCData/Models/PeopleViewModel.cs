@@ -47,8 +47,13 @@ namespace MVCData.Models
 
                 if (addPerson)
                 {
+                    int rowClassIndex = (peopleToDisplayIndex % 2);
+                   
                     Person personInPeopleToDisplayList = new Person(person);    // Create a copy of person
+                    
                     personInPeopleToDisplayList.ItemIndex = peopleToDisplayIndex;   // Assign an ItemIndex (which is its index in the PeopleToDisplay list)
+                    personInPeopleToDisplayList.RowClass = TableRowClasses[rowClassIndex];
+                    personInPeopleToDisplayList.Column5Mode = Column5Modes.RemoveLink;
 
                     PeopleToDisplay.Add(personInPeopleToDisplayList);
                     peopleToDisplayIndex++;

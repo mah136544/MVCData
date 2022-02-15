@@ -19,7 +19,7 @@ namespace MVCData.Data
        
        public string PhoneNumber { get; set; }
      
-        public City City { get; set; }
+        public DBCity City { get; set; }
         public int CityId { get; set; }
         
         public List<PersonLanguage> Languages { get; set; }
@@ -66,20 +66,21 @@ namespace MVCData.Data
             CityId = personData.CityId;
         }
 
+        public PersonDB(ReactAddPersonInputModel personData)
+        {
+            Name = personData.Name;
+            PhoneNumber = personData.PhoneNumber;
+            CityId = personData.CityId;
+        }
+
         public PersonDB(Person source)
         {
             Name = source.Name;
             PhoneNumber = source.PhoneNumber;
+            //    City = source.City;
             ID = source.ID;
         }
     }
 
 }
-
-
-
-
-
-
-
 

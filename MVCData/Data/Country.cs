@@ -22,13 +22,13 @@ namespace MVCData.Data
         [MaxLength(2, ErrorMessage = " Max 2 characters For Country Cod")]
         public string CountryCode { get; set; }
 
-        public List<City> Cities { get; set; }
+        public List<DBCity> Cities { get; set; }
 
         public string CitiesString
         {
             get
             {
-                List<City> cityList = Cities;
+                List<DBCity> cityList = Cities;
                 string citiesString;
 
                 if (cityList != null)

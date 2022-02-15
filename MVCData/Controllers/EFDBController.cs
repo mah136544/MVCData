@@ -1,4 +1,5 @@
-﻿using MVCData.Data;
+﻿
+using MVCData.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ namespace MVCData.Controllers
     }
 
     }
-
 
 }
 

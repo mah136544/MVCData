@@ -19,7 +19,7 @@ namespace MVCData.Models
         {
             Users = new List<User>();
 
-            // Build a list of users which is used in the view:
+            // Create a list of users which is used in the view:
             foreach (var user in UsersInDB)
             {
                 var userObj = new User(user);

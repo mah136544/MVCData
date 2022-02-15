@@ -15,9 +15,9 @@ namespace MVCData.Models
         public readonly DatabaseMVCEFDbContext EFDBContext;
 
         public List<PersonDB> People;
-        public List<City> Cities;
+        public List<DBCity> Cities;
         public List<MLink> MLinks;
-        public List<Language> Languages;
+        public List<DBLanguage> Languages;
         public List<PersonLanguage> personlanguages;
         public List<Country> Countries;
        

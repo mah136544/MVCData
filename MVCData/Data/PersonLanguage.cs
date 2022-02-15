@@ -13,6 +13,6 @@ namespace MVCData.Data
         public PersonDB Person { get; set; }
 
         public int LanguageId { get; set; }
-        public Language Language { get; set; }
+        public DBLanguage Language { get; set; }
     }
 }

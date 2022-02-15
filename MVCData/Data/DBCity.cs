@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MVCData.Data
 {
     [Table("Cities")]
-    public class City
+    public class DBCity
     {
         [Key]
         public int Id { get; set; }
@@ -53,12 +53,12 @@ namespace MVCData.Data
         }
 
 
-        public City()
+        public DBCity()
         {
 
         }
 
-        public City(AddCityInputModel cityData)
+        public DBCity(AddCityInputModel cityData)
         {
             Name = cityData.Name;
             CountryId = cityData.CountryId;

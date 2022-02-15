@@ -1,5 +1,4 @@
-﻿@using MVCData.Models;
-@using MVCData.Data;
+﻿
 @model EditPersonInputModel;
 
 <form class="form" id="EditPersonForm" asp-controller="Home" asp-action="EditPerson" method="post">
@@ -14,7 +13,7 @@
             string selectedCity = ViewBag.SelectedCity;
 
             // Build the city drop-down list from database table 'Cities':
-            foreach (City city in ViewBag.Cities)
+            foreach (DBCity city in ViewBag.Cities)
             {
                 if (selectedCity != null && selectedCity == city.Name)
                 {
@@ -32,7 +31,7 @@
         @{
             string languages = ViewBag.SelectedLanguages;
             // Build the language drop-down list from database table 'Languages':
-            foreach (Language language in ViewBag.Languages)
+            foreach (DBLanguage language in ViewBag.Languages)
             {
                 if (languages != null && languages.Contains(language.Name))
                 {

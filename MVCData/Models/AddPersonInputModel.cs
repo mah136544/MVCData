@@ -8,7 +8,7 @@ namespace MVCData.Models
 {
     public class AddPersonInputModel
     {
-        public int[] Languages;
+        
 
         [DataType(DataType.Text)]
         [Display(Name = "Name:")]
@@ -23,7 +23,7 @@ namespace MVCData.Models
         public int CityId { get; set; }
 
         [Display(Name="Languages")]
-        public int[] languages { get; set; }
+        public int[] Languages { get; set; }
 
         
 

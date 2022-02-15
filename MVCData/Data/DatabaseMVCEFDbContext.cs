@@ -14,10 +14,10 @@ namespace MVCData.Data
     
         public DbSet<PersonDB>People { get; set; }
         //public DbSet<MLink>MLinks { get; set; }
-        public DbSet<City> Cities { get; set; }
+        public DbSet<DBCity> Cities { get; set; }
         public DbSet<Country>Countries { get; set; }
         public DbSet<PersonLanguage>PersonLanguages { get; set; }
-        public DbSet<Language>Languages { get; set; }
+        public DbSet<DBLanguage>Languages { get; set; }
         
         public DbSet<ApplicationUser>Users { get; set; }
 
@@ -36,7 +36,6 @@ namespace MVCData.Data
          .HasOne(pl => pl.Person)
          .WithMany(person => person.Languages)
          .HasForeignKey(pl => pl.PersonId);
-
           modelBuilder.Entity<PersonLanguage>()
          .HasOne(pl => pl.Language)
          .WithMany(language => language.People)
@@ -47,7 +46,7 @@ namespace MVCData.Data
          .WithMany(city => city.People)
          .HasForeignKey(person => person.CityId);
 
-          modelBuilder.Entity<City>()
+          modelBuilder.Entity<DBCity>()
          .HasOne(city => city.Country)
          .WithMany(country => country.Cities)
          .HasForeignKey(city => city.CountryId);
@@ -58,9 +57,9 @@ namespace MVCData.Data
             modelBuilder.Entity<Country>().HasData(new Country { Id = 3, Name = "USA", CountryCode = "US" });
 
             //Add City
-            modelBuilder.Entity<City>().HasData(new City { Id = 1, Name = "Tehran", CountryId = 1 });
-            modelBuilder.Entity<City>().HasData(new City { Id = 2, Name = "Shiraz", CountryId = 1 });
-            modelBuilder.Entity<City>().HasData(new City { Id = 3, Name = "Mashhad", CountryId = 1 });
+            modelBuilder.Entity<DBCity>().HasData(new DBCity { Id = 1, Name = "Tehran", CountryId = 1 });
+            modelBuilder.Entity<DBCity>().HasData(new DBCity { Id = 2, Name = "Shiraz", CountryId = 1 });
+            modelBuilder.Entity<DBCity>().HasData(new DBCity { Id = 3, Name = "Mashhad", CountryId = 1 });
 
             //Add people
             modelBuilder.Entity<PersonDB>().HasData(new PersonDB { ID = 1, Name = "Mahnoush", CityId = 1, PhoneNumber = "0738090123" });
@@ -69,11 +68,11 @@ namespace MVCData.Data
             
            //Add Language
 
-            modelBuilder.Entity<Language>().HasData(new Language { Id = 1, Name = "Svenska" });
-            modelBuilder.Entity<Language>().HasData(new Language { Id = 2, Name = "Norska" });
-            modelBuilder.Entity<Language>().HasData(new Language { Id = 3, Name = "Danska" });
-            modelBuilder.Entity<Language>().HasData(new Language { Id = 4, Name = "Persiska" });
-            modelBuilder.Entity<Language>().HasData(new Language { Id = 5, Name = "Arabiska" });
+            modelBuilder.Entity<DBLanguage>().HasData(new DBLanguage { Id = 1, Name = "Svenska" });
+            modelBuilder.Entity<DBLanguage>().HasData(new DBLanguage { Id = 2, Name = "Norska" });
+            modelBuilder.Entity<DBLanguage>().HasData(new DBLanguage { Id = 3, Name = "Danska" });
+            modelBuilder.Entity<DBLanguage>().HasData(new DBLanguage { Id = 4, Name = "Persiska" });
+            modelBuilder.Entity<DBLanguage>().HasData(new DBLanguage { Id = 5, Name = "Arabiska" });
 
             // Add peolpe with language
             
@@ -99,7 +98,7 @@ namespace MVCData.Data
                 NormalizedEmail = "ADMIN@ADMIN.COM",
                 UserName = "Admin",
                 NormalizedUserName = "ADMIN",
-                PasswordHash = hasher.HashPassword(null, "maham1d"),
+                PasswordHash = hasher.HashPassword(null, "@Maham1d"),
                 FirstName = "Admin",
                 LastName = "Admin",
                 BirthDate = "1998-11-18"

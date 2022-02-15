@@ -24,6 +24,7 @@
                     if (User.Identity.IsAuthenticated)
                     {
                         links.Add("AJAX", "/AJAX/");
+                        links.Add("React", "/React/");
                         if (User.IsInRole("Admin"))
                         {
                             links.Add("Cities", "/Cities/");
@@ -62,6 +63,7 @@
     </footer>
     <script src="~/site.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/boostrap.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     </body>
     </html>

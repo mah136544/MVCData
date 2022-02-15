@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MVCData.Data
 {
     [Table("Languages")]
-    public class Language
+    public class DBLanguage
     {
         [Key]
         public int Id { get; set; }
@@ -49,12 +49,12 @@ namespace MVCData.Data
             }
         }
 
-        public Language()
+        public DBLanguage()
         {
 
         }
 
-        public Language(AddLanguageInputModel languageData)
+        public DBLanguage(AddLanguageInputModel languageData)
         {
             Name = languageData.Name;
         }

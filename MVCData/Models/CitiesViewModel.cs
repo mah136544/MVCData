@@ -11,26 +11,26 @@ namespace MVCData.Models
     
         public class CitiesViewModel: DBModel
         {
-        public CitiesViewModel(Controller aController, Data.DatabaseMVCEFDbContext dbContext) : base(aController, dbContext)
+        public CitiesViewModel(Controller aController, DatabaseMVCEFDbContext dbContext) : base(aController, dbContext)
         {
 
         }
 
 
-        public City AddCity(AddCityInputModel cityData)
+        public DBCity AddCity(AddCityInputModel cityData)
         {
-            City city = null;
+            DBCity city = null;
 
             if (aController.ModelState.IsValid)
             {
-                city = new City(cityData);
+                city = new DBCity(cityData);
 
                 AddCityToDB(city);
             }
 
             return city;
         }
-        public int AddCityToDB(City aCity)
+        public int AddCityToDB(DBCity aCity)
         {
             aCity.Id = 0;                                 // Set ID to 0 to allow addition to database
 
@@ -43,7 +43,7 @@ namespace MVCData.Models
         {
             bool success = false;
 
-            City city = EFDBContext.Cities.Find(ID);
+            DBCity city = EFDBContext.Cities.Find(ID);
             if (city != null)
             {
                 Cities.Remove(city);

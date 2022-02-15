@@ -10,7 +10,7 @@ namespace MVCData.Models
 {
     public class CountriesViewModel : DBModel
     {
-        public CountriesViewModel(Controller aController, Data.DatabaseMVCEFDbContext dbContext) : base(aController, dbContext)
+        public CountriesViewModel(Controller aController, DatabaseMVCEFDbContext dbContext) : base(aController, dbContext)
         {
 
         }
